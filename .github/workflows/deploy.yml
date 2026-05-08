@@ -46,15 +46,16 @@ jobs:
         run: |
           npm ci
           npm run build
+      - name: Prepare Artifact
+        run: |
+          mkdir -p deploy
+          cp -r .next ./deploy/
+          cp -r public .deploy/ 2> /dev/null || true
+          cp package.json package-lock.json next.config.ts ./deploy/ 2>/dev/null || true
       - uses: actions/upload-artifact@v4
         with:
           name: frontend-build
-          path: |
-            frontend/.next/
-            frontend/public/
-            frontend/package.json
-            frontend/package-lock.json
-            frontend/next.config.ts
+          path: frontend/deploy/
  
   # ── Job 3: S3 업로드 (빌드 결과물) ──────────────────
   upload-to-s3:
