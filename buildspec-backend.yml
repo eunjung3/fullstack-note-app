@@ -13,6 +13,7 @@ phases:
       - cd backend && chmod +x gradlew && ./gradlew bootJar -x test
   post_build:
     commands:
+      - cd ..
       - mkdir -p deploy-backend
       - cp backend/build/libs/note-app.jar deploy-backend/
       - cp backend/Procfile deploy-backend/
